@@ -3,24 +3,12 @@ const express = require('express');
 const Person = require('./models/person');
 const cors = require('cors');
 const middleware = require('./utils/middleware');
-const morgan = require('morgan');
 
 const app = express();
 
 app.use(express.static('build'));
 app.use(cors());
 app.use(express.json());
-
-morgan.token('person', (request) => {
-	if (request.method === 'POST') {
-		return JSON.stringify(request.body);
-	}
-});
-app.use(
-	morgan(
-		':method :url :status :res[content-length] - :response-time ms :person'
-	)
-);
 
 app.use(middleware.requestLogger);
 
